@@ -1,13 +1,30 @@
 <h2>Product List</h2>
 <ul>
+    <!--
     <li (click)="selectedProduct = 'Webcam'">Webcam</li>
     <li (click)="selectedProduct = 'Microphone'">Microphone</li>
     <li (click)="selectedProduct = 'Wireless Keyboard'">Wireless Keyboard</li>
+    -->
+    <!-- For Structural Directive
+    <li *ngFor="let product of products | sort; trackBy: trackByProducts" (click)="selectedProduct=product">
+        {{product}}
+    </li>
+    -->
+    @for (product of products | sort; track product.name) {
+        <li (click)="selectedProduct = product"> {{product.name}} </li>
+    }@empty {
+        <li>There are no products.</li>
+    }
 </ul>
 <app-product-detail 
+    *ngIf="selectedProduct; else noProduct"
     #product
-    [name]="selectedProduct"
-    (bought)="onBuy($event)"
-></app-product-detail>
-
-<span>{{product.name}}</span>
+    [product]="selectedProduct"
+    (bought)="onBuy($event)">
+</app-product-detail>
+<ng-template #noProduct>
+    <p>No product selected!</p>
+</ng-template>
+<h3>Offers</h3>
+<!--Dynamic Component-->
+<ng-template appProductHost></ng-template>

@@ -1,4 +1,44 @@
-<h2>Product Details</h2>
-<h3>{{name}}</h3>
-<button (click)="buy()">Buy Now</button>
+<!-- Using Structural Directives
+<div *ngIf="name">
+    <h2>Product Details</h2>
+    <h3>{{name}}</h3>
+    <button (click)="buy()">Buy Now</button>
+</div>
+-->
+@if (product) {
+    <h2>Product Details</h2>
+    <h3>{{product.name}}</h3>
+    <!-- Switch Structural Directive
+    <div [ngSwitch]="name">
+        <p *ngSwitchCase="'Webcam'">
+            Product is used for video
+        </p>
+        <p *ngSwitchCase="'Microphone'">
+            Product is used for audio
+        </p>
+        <p *ngSwitchDefault>
+            Product is used for general use
+        </p>
+    </div>
+    -->
+    <span>{{product.price | currency: 'EUR'}}</span>
+    @switch (product.name) {
+        @case ('Webcam') {
+            <p>
+                Product is used for video
+            </p>
+        }
+        @case ('Microphone') {
+            <p>
+                Product is used for audio
+            </p>
+        }
+        @default {
+            <p>
+                Product is used for general use
+            </p>
+        }
+    }
+    <button (click)="buy()">Buy Now</button>
+}
 <span>{{productName}}</span>

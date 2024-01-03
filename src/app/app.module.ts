@@ -9,17 +9,23 @@ import { AppRoutingModule } from './app-routing.module';
 // The main component of the Angular app.
 import { AppComponent } from './app.component';
 import { ProductsModule } from './products/products.module';
+import { CopyrightDirective } from './copyright.directive';
+import { NumericDirective } from './numeric.directive';
+import { PermissionDirective } from './permission.directive';
 
 @NgModule({
   // Angular artifacts(components)
   declarations: [
-    AppComponent
+    AppComponent,
+    CopyrightDirective,
+    NumericDirective,
+    PermissionDirective,
   ],
   // Other Angular Modules that are contained in this module.
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ProductsModule
+    ProductsModule,
   ],
   // Services
   providers: [],
