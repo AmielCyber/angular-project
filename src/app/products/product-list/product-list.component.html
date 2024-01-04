@@ -10,12 +10,15 @@
         {{product}}
     </li>
     -->
-    @for (product of products | sort; track product.name) {
-        <li (click)="selectedProduct = product"> {{product.name}} </li>
+    @for (product of products | sort; track product.name; let i = $index;) {
+        <li (click)="selectedProduct = product"> 
+            <app-product-view [id]="i"></app-product-view>
+        </li>
     }@empty {
         <li>There are no products.</li>
     }
 </ul>
+<!--
 <app-product-detail 
     *ngIf="selectedProduct; else noProduct"
     #product
@@ -25,6 +28,19 @@
 <ng-template #noProduct>
     <p>No product selected!</p>
 </ng-template>
-<h3>Offers</h3>
+-->
+@if(selectedProduct){
+<app-product-detail 
+    #product
+    [product]="selectedProduct"
+    (bought)="onBuy($event)">
+</app-product-detail>
+}@else {
+    <p>No product selected!</p>
+}
+<h2>Favorites</h2>
+<app-favorites></app-favorites>
 <!--Dynamic Component-->
+<!--
 <ng-template appProductHost></ng-template>
+-->
