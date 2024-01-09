@@ -10,7 +10,7 @@
         {{product}}
     </li>
     -->
-    @for (product of products | sort; track product.name; let i = $index;) {
+    @for (product of (products$ | async)! | sort; track product.name; let i = $index;) {
         <li (click)="selectedProduct = product"> 
             <app-product-view [id]="i"></app-product-view>
         </li>
@@ -38,8 +38,6 @@
 }@else {
     <p>No product selected!</p>
 }
-<h2>Favorites</h2>
-<app-favorites></app-favorites>
 <!--Dynamic Component-->
 <!--
 <ng-template appProductHost></ng-template>
