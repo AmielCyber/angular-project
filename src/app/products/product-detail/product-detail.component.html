@@ -1,11 +1,5 @@
-<!-- Using Structural Directives
-<div *ngIf="name">
-    <h2>Product Details</h2>
-    <h3>{{name}}</h3>
-    <button (click)="buy()">Buy Now</button>
-</div>
--->
-@if (product) {
+<div>
+@if (product$ | async; as product) {
     <h2>Product Details</h2>
     <h3>{{product.name}}</h3>
     <!-- Switch Structural Directive
@@ -22,23 +16,13 @@
     </div>
     -->
     <span>{{product.price | currency: 'EUR'}}</span>
-    @switch (product.name) {
-        @case ('Webcam') {
-            <p>
-                Product is used for video
-            </p>
+    <input placeholder="New price" #price />
+    <button (click)="changePrice(product, price.valueAsNumber)">Change</button>
+    <p>
+        @if(authService.isLoggedIn){
+            <button (click)="buy()">Buy Now</button>
         }
-        @case ('Microphone') {
-            <p>
-                Product is used for audio
-            </p>
-        }
-        @default {
-            <p>
-                Product is used for general use
-            </p>
-        }
-    }
-    <button (click)="buy()">Buy Now</button>
+        <button class="delete" (click)="remove(product)">Delete</button>
+    </p>
 }
-<span>{{productName}}</span>
+</div>
