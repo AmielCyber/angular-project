@@ -7,7 +7,8 @@ import {
   OnChanges,
   SimpleChanges,
 } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, switchMap, of } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 import { Product } from '../product';
 import { ProductsService } from '../products.service';
@@ -25,32 +26,36 @@ export class ProductDetailComponent implements OnInit, OnChanges {
   @Output() bought = new EventEmitter<string>();
   @Output() deleted = new EventEmitter();
 
-  constructor(private productService: ProductsService, public authService: AuthService) {}
+  constructor(
+    private productService: ProductsService,
+    private route: ActivatedRoute,
+    public authService: AuthService
+  ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     this.product$ = this.productService.getProduct(this.id);
   }
 
   ngOnInit(): void {
-    console.log(`Name is ${this.product?.name} in the ngOnInit`);
+    this.product$ = this.route.data.pipe(
+      switchMap(data => of(data['product']))
+    );
   }
 
   buy() {
     this.bought.emit(this.product?.name);
   }
 
-  changePrice(product: Product, price: number){
-    this.productService
-      .updateProduct(product.id, price)
-      .subscribe(() => {
-        alert(`The price of ${product.name} was changed!`)
-      });
+  changePrice(product: Product, price: number) {
+    this.productService.updateProduct(product.id, price).subscribe(() => {
+      alert(`The price of ${product.name} was changed!`);
+    });
   }
 
   remove(product: Product) {
     this.productService.deleteProduct(product.id).subscribe(() => {
       this.deleted.emit();
-    })
+    });
   }
 
   get productName(): string {

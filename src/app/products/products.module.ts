@@ -2,12 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { ProductListComponent } from './product-list/product-list.component';
-import { ProductComponent } from './product/product.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { SortPipe } from './sort.pipe';
 import { ProductHostDirective } from './product-host.directive';
 import { ProductViewComponent } from './product-view/product-view.component';
 import { ProductCreateComponent } from './product-create/product-create.component';
+import { ProductsRoutingModule } from './products-routing.module';
 
 
 @NgModule({
@@ -21,7 +21,7 @@ import { ProductCreateComponent } from './product-create/product-create.componen
   ],
   imports: [
     CommonModule,
-    ProductComponent
+    ProductsRoutingModule
   ],
   exports: [ProductListComponent]
 })

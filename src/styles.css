@@ -1,6 +1,13 @@
-/* You can add global styles to this file, and also import other style files */
-/* You can add global styles to this file, and also import other style files */
-* {
+a {
+    color: #1976d2;
+    text-decoration: none;
+    margin: 5px;
+  }
+  a:hover {
+    opacity: 0.8;
+  }
+
+  * {
     font-family: 'Roboto', Arial, sans-serif;
     color: #616161;
     box-sizing: border-box;
@@ -45,20 +52,6 @@
     font-weight: normal;
   }
   
-  .copyright {
-    background-color: lightgray;
-    padding: 10px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-  }
-  
-  .valid {
-    border-bottom: solid green;
-  }
-  
-  .invalid {
-    border-bottom: solid red;
-  }
-
   input {
     font-size: 14px;
     border-radius: 4px;
@@ -66,10 +59,14 @@
     margin-bottom: 16px;
     border: 1px solid #BDBDBD;
   }
-
+  
   label {
     font-size: 12px;
     font-weight: bold;
     margin-bottom: 4px;
     display: block;
+  }
+
+  .active {
+    color: black;
   }
