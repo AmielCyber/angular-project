@@ -7,17 +7,22 @@ import { authGuard } from './auth/auth.guard';
 import { checkoutGuard } from './checkout.guard';
 
 const routes: Routes = [
-  {path: "cart", component: CartComponent, canActivate: [authGuard], canDeactivate: [checkoutGuard]},
   {
-    path: "about",
-    loadChildren: () => import("./about/about-info/about-info.component").then(c => c.AboutInfoComponent),
-    canMatch: [authGuard]
+    path: 'cart',
+    component: CartComponent,
+    canActivate: [authGuard],
+    canDeactivate: [checkoutGuard],
   },
-  {path: "**", component: PageNotFoundComponent}
+  {
+    path: 'about',
+    loadChildren: () =>
+      import('./about/about.module').then((m) => m.AboutModule),
+  },
+  { path: '**', component: PageNotFoundComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

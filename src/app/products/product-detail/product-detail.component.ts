@@ -13,6 +13,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Product } from '../product';
 import { ProductsService } from '../products.service';
 import { AuthService } from '../../auth/auth.service';
+import { CartService } from '../../cart/cart.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -25,11 +26,13 @@ export class ProductDetailComponent implements OnInit, OnChanges {
   @Input() product?: Product;
   @Output() bought = new EventEmitter<string>();
   @Output() deleted = new EventEmitter();
+  price?: number;
 
   constructor(
     private productService: ProductsService,
     private route: ActivatedRoute,
-    public authService: AuthService
+    public authService: AuthService,
+    private cartService: CartService
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -42,8 +45,8 @@ export class ProductDetailComponent implements OnInit, OnChanges {
     );
   }
 
-  buy() {
-    this.bought.emit(this.product?.name);
+  buy(product: Product) {
+    this.cartService.addProduct(product);
   }
 
   changePrice(product: Product, price: number) {

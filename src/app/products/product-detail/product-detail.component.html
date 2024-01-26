@@ -16,11 +16,13 @@
     </div>
     -->
     <span>{{product.price | currency: 'EUR'}}</span>
-    <input placeholder="New price" #price />
-    <button (click)="changePrice(product, price.valueAsNumber)">Change</button>
+    <form (ngSubmit)="changePrice(product, price!)">
+        <input placeholder="New price" name="price"  [(ngModel)]="price"/>
+        <button type="submit">Change</button>
+    </form>
     <p>
         @if(authService.isLoggedIn){
-            <button (click)="buy()">Buy Now</button>
+            <button (click)="buy(product)">Buy Now</button>
         }
         <button class="delete" (click)="remove(product)">Delete</button>
     </p>
