@@ -7,8 +7,10 @@ import {
   OnChanges,
   SimpleChanges,
 } from '@angular/core';
-import { Observable, switchMap, of } from 'rxjs';
+import { Observable, switchMap, of, filter } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { PriceComponent } from '../price/price.component';
 
 import { Product } from '../product';
 import { ProductsService } from '../products.service';
@@ -32,7 +34,8 @@ export class ProductDetailComponent implements OnInit, OnChanges {
     private productService: ProductsService,
     private route: ActivatedRoute,
     public authService: AuthService,
-    private cartService: CartService
+    private cartService: CartService,
+    private dialog: MatDialog
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -48,9 +51,13 @@ export class ProductDetailComponent implements OnInit, OnChanges {
   buy(product: Product) {
     this.cartService.addProduct(product);
   }
-
-  changePrice(product: Product, price: number) {
-    this.productService.updateProduct(product.id, price).subscribe(() => {
+  changePrice(product: Product) {
+    this.dialog.open(PriceComponent, {
+      data: product.price
+    }).afterClosed().pipe(
+      filter(price => !!price),
+      switchMap(price => this.productService.updateProduct(product.id, price))
+    ).subscribe(() => {
       alert(`The price of ${product.name} was changed!`);
     });
   }
